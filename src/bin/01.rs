@@ -2,57 +2,55 @@ advent_of_code::solution!(1);
 
 pub fn part_one(input: &str) -> Option<u32> {
     // Split input into lines
-    let input: Vec<&str> = input.lines().collect();
-    let numbers: Vec<u32> = input
-        .into_iter()
-        .map(|line| {
-            // Filter out non-numeric characters
-            let digits: Vec<u32> = line.chars().filter_map(|c| c.to_digit(10)).collect();
-            // Convert digits to numbers
-            let number = digits[0] * 10 + digits[digits.len() - 1];
-            number
-        })
-        .collect();
-    Some(numbers.iter().sum())
+    let numbers = input.lines().map(|line| {
+        // Filter out non-numeric characters
+        let mut digits = line.chars().filter_map(|c| c.to_digit(10));
+        // Convert digits to numbers
+        let first = digits.next().expect("This to be a number");
+        let number = match digits.last() {
+            Some(num) => first * 10 + num,
+            None => first * 10 + first,
+        };
+        number
+    });
+    Some(numbers.sum())
 }
 
 pub fn part_two(input: &str) -> Option<u32> {
-    let digit_names = [
-        "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
-    ];
-    let lines: Vec<String> = input
-        .lines()
-        .map(|line| {
-            let mut new_line = String::from("");
-            let mut starting_char = 0;
-            while starting_char < line.len() {
-                let mut found_digit = false;
-                for (digit, digit_name) in digit_names.iter().enumerate() {
-                    if line[starting_char..].starts_with(digit_name) {
-                        new_line.push_str(&digit.to_string());
-                        starting_char += digit_name.len();
-                        found_digit = true;
-                        break;
-                    }
-                }
-                if found_digit {
-                    continue;
-                }
-                new_line.push(line.chars().nth(starting_char).unwrap());
-                starting_char += 1;
+    let numbers = input.lines().map(|line| {
+        let mut digits = (0..line.len()).filter_map(|i| {
+            let reduced_line = &line[i..];
+            if reduced_line.starts_with("one") {
+                return Some(1);
+            } else if reduced_line.starts_with("two") {
+                return Some(2);
+            } else if reduced_line.starts_with("three") {
+                return Some(3);
+            } else if reduced_line.starts_with("four") {
+                return Some(4);
+            } else if reduced_line.starts_with("five") {
+                return Some(5);
+            } else if reduced_line.starts_with("six") {
+                return Some(6);
+            } else if reduced_line.starts_with("seven") {
+                return Some(7);
+            } else if reduced_line.starts_with("eight") {
+                return Some(8);
+            } else if reduced_line.starts_with("nine") {
+                return Some(9);
             }
-            new_line
-        })
-        .collect();
-    let numbers: Vec<u32> = lines
-        .into_iter()
-        .map(|line| {
-            let digits: Vec<u32> = line.chars().filter_map(|c| c.to_digit(10)).collect();
-            let number = digits[0] * 10 + digits[digits.len() - 1];
-            number
-        })
-        .collect();
-    Some(numbers.iter().sum())
+            reduced_line.chars().next().unwrap().to_digit(10)
+        });
+        // Convert digits to numbers
+        let first = digits.next().expect("This to be a number");
+        let number = match digits.last() {
+            Some(num) => first * 10 + num,
+            None => first * 10 + first,
+        };
+        number
+    });
+
+    Some(numbers.sum())
 }
 
 #[cfg(test)]
