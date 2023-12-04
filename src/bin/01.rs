@@ -7,11 +7,10 @@ pub fn part_one(input: &str) -> Option<u32> {
         let mut digits = line.chars().filter_map(|c| c.to_digit(10));
         // Convert digits to numbers
         let first = digits.next().expect("This to be a number");
-        let number = match digits.last() {
+        match digits.last() {
             Some(num) => first * 10 + num,
             None => first * 10 + first,
-        };
-        number
+        }
     });
     Some(numbers.sum())
 }
@@ -43,11 +42,10 @@ pub fn part_two(input: &str) -> Option<u32> {
         });
         // Convert digits to numbers
         let first = digits.next().expect("This to be a number");
-        let number = match digits.last() {
+        match digits.last() {
             Some(num) => first * 10 + num,
             None => first * 10 + first,
-        };
-        number
+        }
     });
 
     Some(numbers.sum())

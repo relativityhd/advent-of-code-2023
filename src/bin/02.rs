@@ -9,7 +9,7 @@ pub fn part_one(input: &str) -> Option<u32> {
         let mut is_possible = true;
         for pick in data.split("; ") {
             for color_tuple in pick.split(", ") {
-                let (n, color) = color_tuple.split_once(" ").unwrap();
+                let (n, color) = color_tuple.split_once(' ').unwrap();
                 let n: u32 = n.parse().unwrap();
                 is_possible = match color {
                     "red" => is_possible && n <= 12,
@@ -22,7 +22,7 @@ pub fn part_one(input: &str) -> Option<u32> {
                 }
             }
         }
-        id.split_once(" ").unwrap().1.parse().unwrap()
+        id.split_once(' ').unwrap().1.parse().unwrap()
     });
     Some(games.sum())
 }
@@ -45,7 +45,7 @@ pub fn part_two(input: &str) -> Option<u32> {
             },
             |mut game, pick| {
                 for color_tuple in pick.split(", ") {
-                    let (n, color) = color_tuple.split_once(" ").unwrap();
+                    let (n, color) = color_tuple.split_once(' ').unwrap();
                     let n: u32 = n.parse().unwrap();
                     if color == "red" {
                         game.red = max(game.red, n);
